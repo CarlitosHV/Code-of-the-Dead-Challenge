@@ -68,6 +68,9 @@ class DiaDeLosMuertosGame {
         this.symbolImages = {};
         this.colors = ['#ff6b35', '#ffd700', '#ff1744', '#9c27b0', '#00bcd4', '#4caf50'];
         
+        // Inicializar sistema de audio
+        this.audioManager = new AudioManager();
+        
         this.loadAssets().then(() => {
             this.setupResponsiveCanvas();
             this.initGame();
@@ -128,6 +131,9 @@ class DiaDeLosMuertosGame {
     }
     
     celebrateSkulls() {
+        // Reproducir sonido de match exitoso
+        this.audioManager.playMatchSound();
+        
         // Solo las calaveras principales (centrales) hacen shake
         this.leftSkull.classList.add('shake');
         this.rightSkull.classList.add('shake');
@@ -162,6 +168,9 @@ class DiaDeLosMuertosGame {
     }
     
     laughSkulls() {
+        // Reproducir sonido de fallo
+        this.audioManager.playFailSound();
+        
         // Todas las calaveras pequeñas se ríen
         this.allSkulls.forEach(skull => {
             skull.classList.add('laugh');
@@ -932,6 +941,9 @@ class DiaDeLosMuertosGame {
     
     activateCrossPower(crossRow, crossCol, targetRow, targetCol) {
         this.animating = true;
+        
+        // Reproducir sonido especial para poderes
+        this.audioManager.playSpecialSound();
         
         // Crear efectos visuales de activación
         this.celebrateSkulls();

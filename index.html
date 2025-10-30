@@ -9,7 +9,12 @@
   <body>
     <div class="game-container">
       <header>
-        <h1>🌺 Día de los Muertos 🌺</h1>
+        <div class="header-top">
+          <h1>🌺 Día de los Muertos 🌺</h1>
+          <button id="soundToggle" class="sound-btn" title="Toggle Sound">
+            <span class="sound-icon">🔊</span>
+          </button>
+        </div>
         <div class="score-board">
           <div class="score">Score: <span id="score">0</span></div>
           <div class="moves">Moves: <span id="moves">30</span></div>
@@ -132,7 +137,22 @@
       </div>
     </div>
 
+    <!-- Audio elements -->
+    <audio id="backgroundMusic" loop preload="auto">
+      <source src="data:audio/wav;base64," type="audio/wav">
+    </audio>
+    <audio id="matchSound" preload="auto">
+      <source src="data:audio/wav;base64," type="audio/wav">
+    </audio>
+    <audio id="specialSound" preload="auto">
+      <source src="data:audio/wav;base64," type="audio/wav">
+    </audio>
+    <audio id="failSound" preload="auto">
+      <source src="data:audio/wav;base64," type="audio/wav">
+    </audio>
+
     <script src="assets.js"></script>
+    <script src="audio.js"></script>
     <script src="game.js"></script>
   </body>
 </html>
