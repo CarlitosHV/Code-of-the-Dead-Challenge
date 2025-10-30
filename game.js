@@ -13,6 +13,28 @@ class DiaDeLosMuertosGame {
         this.animations = [];
         this.particles = [];
         
+        // Sistema de niveles
+        this.currentLevel = 1;
+        this.targetScore = 500;
+        this.baseMovesPerLevel = 30;
+        this.levelCompleted = false;
+        this.gameCompleted = false;
+        this.totalScore = 0; // Score acumulado total de todos los niveles
+        
+        // Configuración de niveles
+        this.levels = [
+            { level: 1, targetScore: 500, moves: 30, description: "Nivel Principiante" },
+            { level: 2, targetScore: 800, moves: 25, description: "Nivel Intermedio" },
+            { level: 3, targetScore: 1200, moves: 22, description: "Nivel Avanzado" },
+            { level: 4, targetScore: 1600, moves: 20, description: "Nivel Experto" },
+            { level: 5, targetScore: 2200, moves: 18, description: "Nivel Maestro" },
+            { level: 6, targetScore: 2800, moves: 16, description: "Nivel Leyenda" },
+            { level: 7, targetScore: 3500, moves: 15, description: "Nivel Épico" },
+            { level: 8, targetScore: 4500, moves: 14, description: "Nivel Mítico" },
+            { level: 9, targetScore: 5500, moves: 13, description: "Nivel Divino" },
+            { level: 10, targetScore: 7000, moves: 12, description: "Maestro de los Muertos" }
+        ];
+        
         // Variables para responsive design
         this.canvasSize = 480;
         this.scaleFactor = 1;
@@ -236,6 +258,14 @@ class DiaDeLosMuertosGame {
         this.board = [];
         this.animations = [];
         this.particles = [];
+        this.levelCompleted = false;
+        this.gameCompleted = false;
+        
+        // Reiniciar score del nivel actual (no el total)
+        this.score = 0;
+        
+        // Configurar nivel actual
+        this.setupCurrentLevel();
         
         for (let row = 0; row < this.gridSize; row++) {
             this.board[row] = [];
@@ -319,10 +349,20 @@ class DiaDeLosMuertosGame {
         
         // Botón de reset
         document.getElementById('resetBtn').addEventListener('click', () => {
-            this.score = 0;
-            this.moves = 30;
-            this.selectedTile = null;
-            this.initGame();
+            this.resetGame();
+        });
+        
+        // Botones de modales
+        document.getElementById('nextLevelBtn').addEventListener('click', () => {
+            this.nextLevel();
+        });
+        
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            this.resetGame();
+        });
+        
+        document.getElementById('playAgainBtn').addEventListener('click', () => {
+            this.resetGame();
         });
         
         // Listener para redimensionar ventana
@@ -1118,12 +1158,138 @@ class DiaDeLosMuertosGame {
     }
     
     gameOver() {
-        alert(`¡Juego terminado! Final Score: ${this.score}\n¡Gracias por honrar a los muertos!`);
+        if (this.score >= this.targetScore) {
+            // El nivel se completó, no es game over
+            return;
+        }
+        
+        const levelData = this.levels[this.currentLevel - 1];
+        const message = `¡Nivel ${this.currentLevel} no completado!\n\n` +
+                       `Objetivo: ${this.targetScore} puntos\n` +
+                       `Tu puntuación: ${this.score}\n` +
+                       `Necesitas ${this.targetScore - this.score} puntos más\n\n` +
+                       `Score total acumulado: ${this.totalScore}\n\n` +
+                       `¡Inténtalo de nuevo!`;
+        
+        alert(message);
+        
+        // Reiniciar solo el nivel actual (el score total se mantiene)
+        this.initGame();
     }
     
+    setupCurrentLevel() {
+        const levelData = this.levels[this.currentLevel - 1];
+        if (levelData) {
+            this.targetScore = levelData.targetScore;
+            this.moves = levelData.moves;
+            this.baseMovesPerLevel = levelData.moves;
+        }
+    }
+
     updateDisplay() {
         document.getElementById('score').textContent = this.score;
+        document.getElementById('targetScore').textContent = this.targetScore;
+        document.getElementById('totalScore').textContent = this.totalScore;
         document.getElementById('moves').textContent = this.moves;
+        document.getElementById('level').textContent = this.currentLevel;
+        
+        const levelData = this.levels[this.currentLevel - 1];
+        if (levelData) {
+            document.getElementById('levelDescription').textContent = levelData.description;
+        }
+        
+        // Verificar si se completó el nivel
+        if (this.score >= this.targetScore && !this.levelCompleted) {
+            this.completeLevel();
+        }
+    }
+
+    completeLevel() {
+        this.levelCompleted = true;
+        this.animating = true;
+        
+        // Reproducir sonido especial
+        this.audioManager.playSpecialSound();
+        
+        // Celebrar con todas las calaveras
+        this.celebrateSkulls();
+        
+        // Calcular bonus por movimientos restantes
+        const movesBonus = this.moves * 50;
+        const levelScore = this.score + movesBonus;
+        
+        // Actualizar score total acumulado
+        this.totalScore += levelScore;
+        
+        // Mostrar modal después de un breve delay
+        setTimeout(() => {
+            this.showLevelCompleteModal(levelScore, movesBonus);
+        }, 1500);
+    }
+
+    showLevelCompleteModal(levelScore, movesBonus) {
+        const modal = document.getElementById('levelCompleteModal');
+        const levelData = this.levels[this.currentLevel - 1];
+        
+        document.getElementById('completedLevel').textContent = `Nivel ${this.currentLevel}: ${levelData.description}`;
+        document.getElementById('finalScore').textContent = levelScore;
+        document.getElementById('remainingMoves').textContent = this.moves;
+        
+        const bonusInfo = document.getElementById('bonusInfo');
+        if (movesBonus > 0) {
+            bonusInfo.innerHTML = `🎁 Bonus por movimientos restantes: +${movesBonus} puntos<br>` +
+                                 `📊 Score total acumulado: ${this.totalScore} puntos`;
+            bonusInfo.style.display = 'block';
+        } else {
+            bonusInfo.innerHTML = `📊 Score total acumulado: ${this.totalScore} puntos`;
+            bonusInfo.style.display = 'block';
+        }
+        
+        this.updateDisplay();
+        
+        modal.style.display = 'block';
+        this.animating = false;
+    }
+
+    nextLevel() {
+        if (this.currentLevel >= this.levels.length) {
+            this.completeGame();
+            return;
+        }
+        
+        this.currentLevel++;
+        this.levelCompleted = false;
+        
+        // Inicializar el nuevo nivel (score se reinicia a 0 en initGame)
+        this.initGame();
+        
+        // Cerrar modal
+        document.getElementById('levelCompleteModal').style.display = 'none';
+    }
+
+    completeGame() {
+        this.gameCompleted = true;
+        
+        // Mostrar modal de juego completado
+        const modal = document.getElementById('gameCompleteModal');
+        document.getElementById('totalScore').textContent = this.totalScore;
+        
+        modal.style.display = 'block';
+        document.getElementById('levelCompleteModal').style.display = 'none';
+    }
+
+    resetGame() {
+        this.currentLevel = 1;
+        this.score = 0;
+        this.totalScore = 0;
+        this.levelCompleted = false;
+        this.gameCompleted = false;
+        
+        // Cerrar modales
+        document.getElementById('levelCompleteModal').style.display = 'none';
+        document.getElementById('gameCompleteModal').style.display = 'none';
+        
+        this.initGame();
     }
     
     updateAnimations(deltaTime) {

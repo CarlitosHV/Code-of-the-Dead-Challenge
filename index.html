@@ -16,8 +16,15 @@
           </button>
         </div>
         <div class="score-board">
-          <div class="score">Score: <span id="score">0</span></div>
-          <div class="moves">Moves: <span id="moves">30</span></div>
+          <div class="level-info">
+            <div class="level">Nivel <span id="level">1</span></div>
+            <div class="level-description" id="levelDescription">Nivel Principiante</div>
+          </div>
+          <div class="score-info">
+            <div class="score">Score: <span id="score">0</span> / <span id="targetScore">500</span></div>
+            <div class="total-score">Total: <span id="totalScore">0</span></div>
+            <div class="moves">Moves: <span id="moves">30</span></div>
+          </div>
         </div>
       </header>
 
@@ -134,6 +141,38 @@
       <div class="game-info">
         <p>Match 3 or more symbols to honor the departed souls!</p>
         <button id="resetBtn">New Game</button>
+      </div>
+    </div>
+
+    <!-- Modal para completar nivel -->
+    <div id="levelCompleteModal" class="modal">
+      <div class="modal-content">
+        <h2>🎉 ¡Nivel Completado! 🎉</h2>
+        <div class="level-complete-info">
+          <p>Has completado el <span id="completedLevel"></span></p>
+          <p>Puntuación final: <span id="finalScore"></span></p>
+          <p>Movimientos restantes: <span id="remainingMoves"></span></p>
+          <div class="bonus-info" id="bonusInfo"></div>
+        </div>
+        <div class="modal-buttons">
+          <button id="nextLevelBtn" class="next-level-btn">Siguiente Nivel</button>
+          <button id="restartBtn" class="restart-btn">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para juego completado -->
+    <div id="gameCompleteModal" class="modal">
+      <div class="modal-content">
+        <h2>🏆 ¡Felicitaciones! 🏆</h2>
+        <div class="game-complete-info">
+          <p>¡Has completado todos los niveles!</p>
+          <p>Eres un verdadero <strong>Maestro de los Muertos</strong></p>
+          <p>Puntuación total: <span id="totalScore"></span></p>
+        </div>
+        <div class="modal-buttons">
+          <button id="playAgainBtn" class="play-again-btn">Jugar de Nuevo</button>
+        </div>
       </div>
     </div>
 
