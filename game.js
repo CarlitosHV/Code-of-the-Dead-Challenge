@@ -49,14 +49,12 @@ class DiaDeLosMuertosGame {
         this.allSkulls = [];
         this.allSkullSvgs = [];
         
-        // Inicializar referencias a todas las calaveras
-        for (let i = 1; i <= 22; i++) {
-            const skullElement = document.getElementById(`topSkull${i}`) || 
-                                document.getElementById(`leftSkull${i}`) || 
+        // Inicializar referencias a todas las calaveras (sin las superiores)
+        for (let i = 1; i <= 15; i++) {
+            const skullElement = document.getElementById(`leftSkull${i}`) || 
                                 document.getElementById(`rightSkull${i}`) || 
                                 document.getElementById(`bottomSkull${i}`);
-            const skullSvg = document.getElementById(`topSkull${i}Svg`) || 
-                            document.getElementById(`leftSkull${i}Svg`) || 
+            const skullSvg = document.getElementById(`leftSkull${i}Svg`) || 
                             document.getElementById(`rightSkull${i}Svg`) || 
                             document.getElementById(`bottomSkull${i}Svg`);
             
@@ -66,9 +64,8 @@ class DiaDeLosMuertosGame {
             }
         }
         
-        // Buscar calaveras por ID específico
+        // Buscar calaveras por ID específico (sin las superiores)
         const skullIds = [
-            'topSkull1', 'topSkull2', 'topSkull3', 'topSkull4', 'topSkull5', 'topSkull6', 'topSkull7', 'topSkull8',
             'leftSkull1', 'leftSkull2', 'leftSkull3', 'rightSkull1', 'rightSkull2', 'rightSkull3', 'rightSkull4',
             'bottomSkull1', 'bottomSkull2', 'bottomSkull3', 'bottomSkull4', 'bottomSkull5', 'bottomSkull6', 'bottomSkull7'
         ];

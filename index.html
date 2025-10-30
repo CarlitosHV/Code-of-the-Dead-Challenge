@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Día de los Muertos - Match 3</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -10,60 +13,25 @@
     <div class="game-container">
       <header>
         <div class="header-top">
+          <button id="resetBtn" class="reset-btn" title="Nuevo Juego">🔄</button>
           <h1>🌺 Día de los Muertos 🌺</h1>
-          <button id="soundToggle" class="sound-btn" title="Toggle Sound">
+          <button id="soundToggle" class="sound-btn" title="Activar/Desactivar Sonido">
             <span class="sound-icon">🔊</span>
           </button>
         </div>
         <div class="score-board">
-          <div class="level-info">
+          <div class="stats-line">
             <div class="level">Nivel <span id="level">1</span></div>
-            <div class="level-description" id="levelDescription">Nivel Principiante</div>
-          </div>
-          <div class="score-info">
-            <div class="score">Score: <span id="score">0</span> / <span id="targetScore">500</span></div>
+            <div class="score">Puntos: <span id="score">0</span>/<span id="targetScore">500</span></div>
             <div class="total-score">Total: <span id="totalScore">0</span></div>
-            <div class="moves">Moves: <span id="moves">30</span></div>
+            <div class="moves">Movimientos: <span id="moves">30</span></div>
           </div>
+          <div class="level-description" id="levelDescription">Nivel Principiante</div>
         </div>
       </header>
 
       <div class="game-board-wrapper">
-        <!-- Calaveras superiores - distribución asimétrica -->
-        <div class="top-skulls">
-          <div class="skull-cluster top-left-cluster">
-            <div class="small-skull skull-1" id="topSkull1">
-              <div class="skull-svg" id="topSkull1Svg"></div>
-            </div>
-            <div class="tiny-skull skull-2" id="topSkull2">
-              <div class="skull-svg" id="topSkull2Svg"></div>
-            </div>
-            <div class="medium-skull skull-3" id="topSkull3">
-              <div class="skull-svg" id="topSkull3Svg"></div>
-            </div>
-          </div>
 
-          <div class="skull-cluster top-center-cluster">
-            <div class="small-skull skull-4" id="topSkull4">
-              <div class="skull-svg" id="topSkull4Svg"></div>
-            </div>
-          </div>
-
-          <div class="skull-cluster top-right-cluster">
-            <div class="medium-skull skull-5" id="topSkull5">
-              <div class="skull-svg" id="topSkull5Svg"></div>
-            </div>
-            <div class="tiny-skull skull-6" id="topSkull6">
-              <div class="skull-svg" id="topSkull6Svg"></div>
-            </div>
-            <div class="small-skull skull-7" id="topSkull7">
-              <div class="skull-svg" id="topSkull7Svg"></div>
-            </div>
-            <div class="tiny-skull skull-8" id="topSkull8">
-              <div class="skull-svg" id="topSkull8Svg"></div>
-            </div>
-          </div>
-        </div>
 
         <div class="game-board-container">
           <!-- Calaveras laterales izquierdas -->
@@ -139,8 +107,7 @@
       </div>
 
       <div class="game-info">
-        <p>Match 3 or more symbols to honor the departed souls!</p>
-        <button id="resetBtn">New Game</button>
+        <p>¡Combina 3 o más símbolos para honrar a las almas de los difuntos!</p>
       </div>
     </div>
 
@@ -155,8 +122,10 @@
           <div class="bonus-info" id="bonusInfo"></div>
         </div>
         <div class="modal-buttons">
-          <button id="nextLevelBtn" class="next-level-btn">Siguiente Nivel</button>
-          <button id="restartBtn" class="restart-btn">Reiniciar</button>
+          <button id="nextLevelBtn" class="next-level-btn">
+            Siguiente Nivel
+          </button>
+          <button id="restartBtn" class="restart-btn">Reiniciar Juego</button>
         </div>
       </div>
     </div>
@@ -171,23 +140,25 @@
           <p>Puntuación total: <span id="totalScore"></span></p>
         </div>
         <div class="modal-buttons">
-          <button id="playAgainBtn" class="play-again-btn">Jugar de Nuevo</button>
+          <button id="playAgainBtn" class="play-again-btn">
+            Jugar de Nuevo
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Audio elements -->
     <audio id="backgroundMusic" loop preload="auto">
-      <source src="data:audio/wav;base64," type="audio/wav">
+      <source src="data:audio/wav;base64," type="audio/wav" />
     </audio>
     <audio id="matchSound" preload="auto">
-      <source src="data:audio/wav;base64," type="audio/wav">
+      <source src="data:audio/wav;base64," type="audio/wav" />
     </audio>
     <audio id="specialSound" preload="auto">
-      <source src="data:audio/wav;base64," type="audio/wav">
+      <source src="data:audio/wav;base64," type="audio/wav" />
     </audio>
     <audio id="failSound" preload="auto">
-      <source src="data:audio/wav;base64," type="audio/wav">
+      <source src="data:audio/wav;base64," type="audio/wav" />
     </audio>
 
     <script src="assets.js"></script>
