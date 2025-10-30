@@ -1,0 +1,787 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+html, body {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #2c1810, #8b4513, #cd853f);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.game-container {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid #ff6b35;
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: #ff6b35;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.score, .moves {
+    background: rgba(255, 107, 53, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #ff6b35;
+}
+
+.game-board-wrapper {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-board-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+}
+
+.top-skulls, .bottom-skulls {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.top-skulls {
+    margin-bottom: 15px;
+}
+
+.bottom-skulls {
+    margin-top: 15px;
+}
+
+/* Clusters de calaveras */
+.skull-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.top-left-cluster {
+    justify-content: flex-start;
+    width: 200px;
+}
+
+.top-center-cluster {
+    justify-content: center;
+    width: 100px;
+}
+
+.top-right-cluster {
+    justify-content: flex-end;
+    width: 220px;
+}
+
+.bottom-left-cluster {
+    justify-content: flex-start;
+    width: 150px;
+}
+
+.bottom-center-cluster {
+    justify-content: center;
+    width: 200px;
+}
+
+.bottom-right-cluster {
+    justify-content: flex-end;
+    width: 150px;
+}
+
+/* Calaveras laterales */
+.left-side-skulls, .right-side-skulls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-board-container canvas {
+    border: 4px solid #ff6b35;
+    border-radius: 10px;
+    background: #1a1a1a;
+}
+
+.side-skull {
+    width: 120px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
+}
+
+.side-skull.shake {
+    animation: skullShake 0.5s ease-in-out;
+}
+
+.skull-svg {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.skull-svg svg {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes skullShake {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    10% { transform: translateX(-5px) rotate(-2deg); }
+    20% { transform: translateX(5px) rotate(2deg); }
+    30% { transform: translateX(-4px) rotate(-1deg); }
+    40% { transform: translateX(4px) rotate(1deg); }
+    50% { transform: translateX(-3px) rotate(-1deg); }
+    60% { transform: translateX(3px) rotate(1deg); }
+    70% { transform: translateX(-2px) rotate(-0.5deg); }
+    80% { transform: translateX(2px) rotate(0.5deg); }
+    90% { transform: translateX(-1px) rotate(-0.2deg); }
+}
+
+.left-skull:hover, .right-skull:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.6));
+}
+
+.left-skull {
+    animation: leftSkullFloat 4s ease-in-out infinite;
+}
+
+.right-skull {
+    animation: rightSkullFloat 4s ease-in-out infinite 2s;
+}
+
+@keyframes leftSkullFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes rightSkullFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+/* Estilos base para todas las calaveras */
+.tiny-skull {
+    width: 40px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 107, 53, 0.2));
+}
+
+.small-skull {
+    width: 60px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 6px rgba(255, 107, 53, 0.2));
+}
+
+.medium-skull {
+    width: 90px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.3));
+}
+
+/* Animaciones para calaveras pequeñas */
+.tiny-skull.celebrate, .small-skull.celebrate, .medium-skull.celebrate {
+    animation: celebrate 1s ease-in-out;
+}
+
+.tiny-skull.laugh, .small-skull.laugh, .medium-skull.laugh {
+    animation: laugh 1.5s ease-in-out;
+}
+
+.tiny-skull:hover {
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.4));
+}
+
+.small-skull:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.5));
+}
+
+.medium-skull:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.6));
+}
+
+/* Animaciones específicas */
+@keyframes celebrate {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(10deg); }
+    50% { transform: scale(1.3) rotate(-10deg); }
+    75% { transform: scale(1.2) rotate(5deg); }
+}
+
+@keyframes laugh {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    10% { transform: scale(1.1) rotate(-5deg); }
+    20% { transform: scale(1.2) rotate(5deg); }
+    30% { transform: scale(1.1) rotate(-3deg); }
+    40% { transform: scale(1.2) rotate(3deg); }
+    50% { transform: scale(1.1) rotate(-2deg); }
+    60% { transform: scale(1.2) rotate(2deg); }
+    70% { transform: scale(1.1) rotate(-1deg); }
+    80% { transform: scale(1.15) rotate(1deg); }
+    90% { transform: scale(1.05) rotate(-0.5deg); }
+}
+
+/* Animaciones de flotación individuales para cada calavera */
+.skull-1 { animation: float1 4s ease-in-out infinite; }
+.skull-2 { animation: float2 3.5s ease-in-out infinite 0.5s; }
+.skull-3 { animation: float3 4.5s ease-in-out infinite 1s; }
+.skull-4 { animation: float4 3.8s ease-in-out infinite 1.5s; }
+.skull-5 { animation: float5 4.2s ease-in-out infinite 2s; }
+.skull-6 { animation: float6 3.6s ease-in-out infinite 0.3s; }
+.skull-7 { animation: float7 4.1s ease-in-out infinite 0.8s; }
+.skull-8 { animation: float8 3.9s ease-in-out infinite 1.3s; }
+.skull-9 { animation: float9 4.3s ease-in-out infinite 1.8s; }
+.skull-10 { animation: float10 3.7s ease-in-out infinite 0.2s; }
+.skull-11 { animation: float11 4.4s ease-in-out infinite 0.7s; }
+.skull-12 { animation: float12 3.4s ease-in-out infinite 1.2s; }
+.skull-13 { animation: float13 4.6s ease-in-out infinite 1.7s; }
+.skull-14 { animation: float14 3.3s ease-in-out infinite 0.4s; }
+.skull-15 { animation: float15 4.7s ease-in-out infinite 0.9s; }
+.skull-16 { animation: float16 3.2s ease-in-out infinite 1.4s; }
+.skull-17 { animation: float17 4.8s ease-in-out infinite 1.9s; }
+.skull-18 { animation: float18 3.1s ease-in-out infinite 0.1s; }
+.skull-19 { animation: float19 4.9s ease-in-out infinite 0.6s; }
+.skull-20 { animation: float20 3.0s ease-in-out infinite 1.1s; }
+.skull-21 { animation: float21 5.0s ease-in-out infinite 1.6s; }
+.skull-22 { animation: float22 2.9s ease-in-out infinite 0.9s; }
+
+/* Keyframes variados para movimientos naturales */
+@keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+@keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-1deg); } }
+@keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+@keyframes float4 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-6px) rotate(-2deg); } }
+@keyframes float5 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-9px) rotate(1deg); } }
+@keyframes float6 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(-3deg); } }
+@keyframes float7 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+@keyframes float8 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-1deg); } }
+@keyframes float9 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-11px) rotate(4deg); } }
+@keyframes float10 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-2deg); } }
+@keyframes float11 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-2px) rotate(1deg); } }
+@keyframes float12 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(-3deg); } }
+@keyframes float13 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+@keyframes float14 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-12px) rotate(-1deg); } }
+@keyframes float15 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(3deg); } }
+@keyframes float16 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-7px) rotate(-2deg); } }
+@keyframes float17 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-9px) rotate(1deg); } }
+@keyframes float18 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-13px) rotate(-4deg); } }
+@keyframes float19 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
+@keyframes float20 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+@keyframes float21 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } }
+@keyframes float22 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-2deg); } }
+
+#gameCanvas {
+    display: block;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.game-info {
+    margin-top: 20px;
+}
+
+.game-info p {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #ffd700;
+}
+
+#resetBtn {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#resetBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(45deg, #f7931e, #ff6b35);
+}
+
+#resetBtn:active {
+    transform: translateY(0);
+}
+/* Responsive design completo para todas las pantallas */
+
+/* Pantallas muy grandes (desktops grandes, 4K) */
+@media (min-width: 1920px) {
+    .game-container {
+        max-width: 1200px;
+        padding: 40px;
+    }
+    
+    header h1 {
+        font-size: 3.5em;
+    }
+    
+    .score-board {
+        font-size: 1.5em;
+    }
+    
+    .game-board-wrapper {
+        max-width: 900px;
+    }
+    
+    .side-skull {
+        width: 150px;
+        height: 180px;
+    }
+}
+
+/* Pantallas grandes (desktops) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .game-container {
+        max-width: 1000px;
+        padding: 30px;
+    }
+    
+    header h1 {
+        font-size: 3em;
+    }
+    
+    .game-board-wrapper {
+        max-width: 800px;
+    }
+}
+
+/* Tablets en landscape */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .game-container {
+        max-width: 900px;
+        padding: 25px;
+    }
+    
+    header h1 {
+        font-size: 2.2em;
+    }
+    
+    .score-board {
+        font-size: 1.1em;
+    }
+    
+    .game-board-wrapper {
+        max-width: 650px;
+    }
+    
+    .side-skull {
+        width: 100px;
+        height: 130px;
+    }
+    
+    .medium-skull {
+        width: 80px;
+        height: 90px;
+    }
+    
+    .small-skull {
+        width: 55px;
+        height: 65px;
+    }
+    
+    .tiny-skull {
+        width: 35px;
+        height: 45px;
+    }
+}
+
+/* Tablets en portrait y móviles grandes */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+        min-height: auto;
+    }
+    
+    .game-container {
+        max-width: 100%;
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+        border-radius: 10px;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    
+    .score-board {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+    
+    .score, .moves {
+        padding: 8px 15px;
+        text-align: center;
+    }
+    
+    .game-board-wrapper {
+        max-width: 100%;
+        margin: 15px 0;
+    }
+    
+    .game-board-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .left-side-skulls, .right-side-skulls {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .side-skull {
+        width: 80px;
+        height: 100px;
+    }
+    
+    .tiny-skull {
+        width: 30px;
+        height: 35px;
+    }
+    
+    .small-skull {
+        width: 45px;
+        height: 55px;
+    }
+    
+    .medium-skull {
+        width: 65px;
+        height: 75px;
+    }
+    
+    .skull-cluster {
+        gap: 5px;
+        justify-content: center;
+    }
+    
+    .top-left-cluster, .top-right-cluster, .bottom-left-cluster, .bottom-right-cluster {
+        width: auto;
+        flex: 1;
+    }
+    
+    .top-center-cluster, .bottom-center-cluster {
+        width: auto;
+        flex: 0 0 auto;
+    }
+    
+    .top-skulls, .bottom-skulls {
+        justify-content: space-around;
+        padding: 0 5px;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+    
+    .game-info p {
+        font-size: 1em;
+    }
+    
+    #resetBtn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    
+    /* Desactivar animaciones en móvil para mejor rendimiento */
+    .skull-1, .skull-2, .skull-3, .skull-4, .skull-5, .skull-6, .skull-7, .skull-8,
+    .skull-9, .skull-10, .skull-11, .skull-12, .skull-13, .skull-14, .skull-15,
+    .skull-16, .skull-17, .skull-18, .skull-19, .skull-20, .skull-21, .skull-22 {
+        animation: none;
+    }
+    
+    .left-skull, .right-skull {
+        animation: none;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    
+    .score-board {
+        font-size: 0.9em;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .score, .moves {
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+    
+    .game-board-wrapper {
+        margin: 10px 0;
+    }
+    
+    .side-skull {
+        width: 60px;
+        height: 80px;
+    }
+    
+    .tiny-skull {
+        width: 25px;
+        height: 30px;
+    }
+    
+    .small-skull {
+        width: 35px;
+        height: 45px;
+    }
+    
+    .medium-skull {
+        width: 50px;
+        height: 60px;
+    }
+    
+    .game-board-container {
+        gap: 10px;
+    }
+    
+    .top-skulls, .bottom-skulls {
+        margin: 5px 0;
+        padding: 0 5px;
+    }
+    
+    .skull-cluster {
+        gap: 3px;
+    }
+    
+    #gameCanvas {
+        max-width: 320px;
+        border-width: 2px;
+    }
+    
+    .game-info p {
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+    
+    #resetBtn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .game-container {
+        padding: 8px;
+    }
+    
+    header h1 {
+        font-size: 1.3em;
+    }
+    
+    .score-board {
+        font-size: 0.8em;
+    }
+    
+    .side-skull {
+        width: 50px;
+        height: 65px;
+    }
+    
+    .tiny-skull {
+        width: 20px;
+        height: 25px;
+    }
+    
+    .small-skull {
+        width: 30px;
+        height: 38px;
+    }
+    
+    .medium-skull {
+        width: 40px;
+        height: 50px;
+    }
+    
+    #gameCanvas {
+        max-width: 280px;
+    }
+    
+    .skull-cluster {
+        gap: 2px;
+    }
+}
+
+/* Orientación landscape en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        align-items: center;
+    }
+    
+    .game-container {
+        padding: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    header h1 {
+        font-size: 1.4em;
+        margin-bottom: 8px;
+    }
+    
+    .score-board {
+        flex-direction: row;
+        justify-content: space-around;
+        margin-bottom: 8px;
+    }
+    
+    .game-board-wrapper {
+        margin: 8px 0;
+    }
+    
+    .top-skulls, .bottom-skulls {
+        margin: 3px 0;
+    }
+    
+    .game-board-container {
+        gap: 8px;
+    }
+    
+    .side-skull {
+        width: 50px;
+        height: 65px;
+    }
+    
+    .tiny-skull, .small-skull, .medium-skull {
+        transform: scale(0.8);
+    }
+    
+    #gameCanvas {
+        max-width: 300px;
+        max-height: 300px;
+    }
+    
+    .game-info {
+        margin-top: 8px;
+    }
+    
+    .game-info p {
+        margin-bottom: 8px;
+        font-size: 0.8em;
+    }
+}
+
+/* Pantallas ultra anchas */
+@media (min-aspect-ratio: 21/9) {
+    .game-container {
+        max-width: 1400px;
+    }
+    
+    .game-board-wrapper {
+        max-width: 1000px;
+    }
+}
+
+/* Ajustes para pantallas táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .tiny-skull:hover, .small-skull:hover, .medium-skull:hover, .side-skull:hover {
+        transform: none;
+        filter: none;
+    }
+    
+    #resetBtn:hover {
+        transform: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Hacer los elementos más grandes para mejor interacción táctil */
+    #resetBtn {
+        min-height: 44px;
+        min-width: 120px;
+    }
+}

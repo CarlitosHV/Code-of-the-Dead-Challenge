@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Día de los Muertos - Match 3</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <header>
+        <h1>🌺 Día de los Muertos 🌺</h1>
+        <div class="score-board">
+          <div class="score">Score: <span id="score">0</span></div>
+          <div class="moves">Moves: <span id="moves">30</span></div>
+        </div>
+      </header>
+
+      <div class="game-board-wrapper">
+        <!-- Calaveras superiores - distribución asimétrica -->
+        <div class="top-skulls">
+          <div class="skull-cluster top-left-cluster">
+            <div class="small-skull skull-1" id="topSkull1">
+              <div class="skull-svg" id="topSkull1Svg"></div>
+            </div>
+            <div class="tiny-skull skull-2" id="topSkull2">
+              <div class="skull-svg" id="topSkull2Svg"></div>
+            </div>
+            <div class="medium-skull skull-3" id="topSkull3">
+              <div class="skull-svg" id="topSkull3Svg"></div>
+            </div>
+          </div>
+
+          <div class="skull-cluster top-center-cluster">
+            <div class="small-skull skull-4" id="topSkull4">
+              <div class="skull-svg" id="topSkull4Svg"></div>
+            </div>
+          </div>
+
+          <div class="skull-cluster top-right-cluster">
+            <div class="medium-skull skull-5" id="topSkull5">
+              <div class="skull-svg" id="topSkull5Svg"></div>
+            </div>
+            <div class="tiny-skull skull-6" id="topSkull6">
+              <div class="skull-svg" id="topSkull6Svg"></div>
+            </div>
+            <div class="small-skull skull-7" id="topSkull7">
+              <div class="skull-svg" id="topSkull7Svg"></div>
+            </div>
+            <div class="tiny-skull skull-8" id="topSkull8">
+              <div class="skull-svg" id="topSkull8Svg"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="game-board-container">
+          <!-- Calaveras laterales izquierdas -->
+          <div class="left-side-skulls">
+            <div class="tiny-skull skull-9" id="leftSkull1">
+              <div class="skull-svg" id="leftSkull1Svg"></div>
+            </div>
+            <div class="side-skull main-left-skull" id="leftSkull">
+              <div class="skull-svg" id="leftSkullSvg"></div>
+            </div>
+            <div class="small-skull skull-10" id="leftSkull2">
+              <div class="skull-svg" id="leftSkull2Svg"></div>
+            </div>
+            <div class="tiny-skull skull-11" id="leftSkull3">
+              <div class="skull-svg" id="leftSkull3Svg"></div>
+            </div>
+          </div>
+
+          <canvas id="gameCanvas" width="480" height="480"></canvas>
+
+          <!-- Calaveras laterales derechas -->
+          <div class="right-side-skulls">
+            <div class="small-skull skull-12" id="rightSkull1">
+              <div class="skull-svg" id="rightSkull1Svg"></div>
+            </div>
+            <div class="tiny-skull skull-13" id="rightSkull2">
+              <div class="skull-svg" id="rightSkull2Svg"></div>
+            </div>
+            <div class="side-skull main-right-skull" id="rightSkull">
+              <div class="skull-svg" id="rightSkullSvg"></div>
+            </div>
+            <div class="medium-skull skull-14" id="rightSkull3">
+              <div class="skull-svg" id="rightSkull3Svg"></div>
+            </div>
+            <div class="tiny-skull skull-15" id="rightSkull4">
+              <div class="skull-svg" id="rightSkull4Svg"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calaveras inferiores - distribución asimétrica -->
+        <div class="bottom-skulls">
+          <div class="skull-cluster bottom-left-cluster">
+            <div class="tiny-skull skull-16" id="bottomSkull1">
+              <div class="skull-svg" id="bottomSkull1Svg"></div>
+            </div>
+            <div class="small-skull skull-17" id="bottomSkull2">
+              <div class="skull-svg" id="bottomSkull2Svg"></div>
+            </div>
+          </div>
+
+          <div class="skull-cluster bottom-center-cluster">
+            <div class="medium-skull skull-18" id="bottomSkull3">
+              <div class="skull-svg" id="bottomSkull3Svg"></div>
+            </div>
+            <div class="tiny-skull skull-19" id="bottomSkull4">
+              <div class="skull-svg" id="bottomSkull4Svg"></div>
+            </div>
+            <div class="small-skull skull-20" id="bottomSkull5">
+              <div class="skull-svg" id="bottomSkull5Svg"></div>
+            </div>
+          </div>
+
+          <div class="skull-cluster bottom-right-cluster">
+            <div class="small-skull skull-21" id="bottomSkull6">
+              <div class="skull-svg" id="bottomSkull6Svg"></div>
+            </div>
+            <div class="tiny-skull skull-22" id="bottomSkull7">
+              <div class="skull-svg" id="bottomSkull7Svg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <p>Match 3 or more symbols to honor the departed souls!</p>
+        <button id="resetBtn">New Game</button>
+      </div>
+    </div>
+
+    <script src="assets.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
