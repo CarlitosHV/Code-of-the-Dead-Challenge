@@ -419,6 +419,129 @@ const SVG_ASSETS = {
         <circle cx="50" cy="5" r="2" fill="#ffd700"/>
         <circle cx="50" cy="95" r="2" fill="#ffd700"/>
     </svg>`,
+
+  // Gato del Día de los Muertos
+  catSymbol: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <radialGradient id="catBodyGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" style="stop-color:#2c1810"/>
+                <stop offset="50%" style="stop-color:#1a1a1a"/>
+                <stop offset="100%" style="stop-color:#000000"/>
+            </radialGradient>
+            <radialGradient id="catEyeGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" style="stop-color:#ffd700"/>
+                <stop offset="100%" style="stop-color:#ff6b35"/>
+            </radialGradient>
+        </defs>
+        
+        <!-- Sombra del gato -->
+        <ellipse cx="52" cy="85" rx="20" ry="8" fill="#000" opacity="0.3"/>
+        
+        <!-- Cola del gato -->
+        <path d="M25 65 Q15 50 20 35 Q25 25 35 30" stroke="#2c1810" stroke-width="8" fill="none" stroke-linecap="round"/>
+        
+        <!-- Cuerpo principal -->
+        <ellipse cx="50" cy="65" rx="22" ry="25" fill="url(#catBodyGrad)" stroke="#ff6b35" stroke-width="2"/>
+        
+        <!-- Cabeza -->
+        <circle cx="50" cy="40" r="18" fill="url(#catBodyGrad)" stroke="#ff6b35" stroke-width="2"/>
+        
+        <!-- Orejas -->
+        <path d="M35 30 L30 15 L45 25 Z" fill="url(#catBodyGrad)" stroke="#ff6b35" stroke-width="2"/>
+        <path d="M65 30 L70 15 L55 25 Z" fill="url(#catBodyGrad)" stroke="#ff6b35" stroke-width="2"/>
+        <path d="M37 25 L33 18 L42 23 Z" fill="#ff1744"/>
+        <path d="M63 25 L67 18 L58 23 Z" fill="#ff1744"/>
+        
+        <!-- Ojos brillantes -->
+        <ellipse cx="44" cy="37" rx="3" ry="5" fill="url(#catEyeGrad)"/>
+        <ellipse cx="56" cy="37" rx="3" ry="5" fill="url(#catEyeGrad)"/>
+        <ellipse cx="44" cy="35" rx="1" ry="3" fill="#000"/>
+        <ellipse cx="56" cy="35" rx="1" ry="3" fill="#000"/>
+        
+        <!-- Nariz -->
+        <path d="M50 42 L47 45 L53 45 Z" fill="#ff6b35"/>
+        
+        <!-- Boca -->
+        <path d="M50 45 Q46 48 42 46" stroke="#ff6b35" stroke-width="2" fill="none"/>
+        <path d="M50 45 Q54 48 58 46" stroke="#ff6b35" stroke-width="2" fill="none"/>
+        
+        <!-- Bigotes -->
+        <path d="M25 40 L35 38" stroke="#ffd700" stroke-width="2"/>
+        <path d="M25 44 L35 42" stroke="#ffd700" stroke-width="2"/>
+        <path d="M75 40 L65 38" stroke="#ffd700" stroke-width="2"/>
+        <path d="M75 44 L65 42" stroke="#ffd700" stroke-width="2"/>
+        
+        <!-- Patas -->
+        <ellipse cx="40" cy="85" rx="5" ry="8" fill="url(#catBodyGrad)"/>
+        <ellipse cx="60" cy="85" rx="5" ry="8" fill="url(#catBodyGrad)"/>
+        
+        <!-- Decoraciones del Día de los Muertos -->
+        <circle cx="35" cy="50" r="3" fill="#ffd700" opacity="0.8">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="65" cy="50" r="3" fill="#ff6b35" opacity="0.8">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="1s"/>
+        </circle>
+        <path d="M50 55 L48 60 L52 60 Z" fill="#ff1744"/>
+    </svg>`,
+
+  // Fantasma del Día de los Muertos
+  ghostSymbol: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <radialGradient id="ghostGrad" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" style="stop-color:#ffffff"/>
+                <stop offset="70%" style="stop-color:#f0f0f0"/>
+                <stop offset="100%" style="stop-color:#e0e0e0"/>
+            </radialGradient>
+            <radialGradient id="ghostEyeGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" style="stop-color:#ff1744"/>
+                <stop offset="100%" style="stop-color:#8b0000"/>
+            </radialGradient>
+        </defs>
+        
+        <!-- Sombra del fantasma -->
+        <ellipse cx="52" cy="90" rx="25" ry="6" fill="#000" opacity="0.2"/>
+        
+        <!-- Cuerpo principal del fantasma -->
+        <path d="M50 20 
+                 C35 20 25 35 25 50
+                 L25 75
+                 L30 70 L35 75 L40 70 L45 75 L50 70 L55 75 L60 70 L65 75 L70 70 L75 75
+                 L75 50
+                 C75 35 65 20 50 20 Z" 
+              fill="url(#ghostGrad)" stroke="#ff6b35" stroke-width="2" opacity="0.9"/>
+        
+        <!-- Ojos del fantasma -->
+        <circle cx="42" cy="40" r="6" fill="url(#ghostEyeGrad)"/>
+        <circle cx="58" cy="40" r="6" fill="url(#ghostEyeGrad)"/>
+        <circle cx="42" cy="38" r="2" fill="#000"/>
+        <circle cx="58" cy="38" r="2" fill="#000"/>
+        
+        <!-- Boca -->
+        <ellipse cx="50" cy="52" rx="8" ry="6" fill="#000" opacity="0.8"/>
+        <ellipse cx="50" cy="50" rx="6" ry="4" fill="#ff1744"/>
+        
+        <!-- Decoraciones del Día de los Muertos en el fantasma -->
+        <circle cx="35" cy="30" r="2" fill="#ffd700">
+            <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="65" cy="30" r="2" fill="#ff6b35">
+            <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite" begin="1s"/>
+        </circle>
+        <circle cx="50" cy="25" r="2" fill="#9c27b0">
+            <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+        
+        <!-- Patrón de flores en el cuerpo -->
+        <path d="M40 60 Q42 58 44 60 Q42 62 40 60" fill="#ff6b35" opacity="0.7"/>
+        <path d="M56 60 Q58 58 60 60 Q58 62 56 60" fill="#ffd700" opacity="0.7"/>
+        <circle cx="42" cy="60" r="1" fill="#ff1744"/>
+        <circle cx="58" cy="60" r="1" fill="#ff1744"/>
+        
+        <!-- Efecto de flotación -->
+        <animateTransform attributeName="transform" type="translate" 
+                         values="0,0; 0,-3; 0,0" dur="3s" repeatCount="indefinite"/>
+    </svg>`,
 };
 
 // Create SVG elements from strings
