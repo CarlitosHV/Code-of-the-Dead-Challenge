@@ -133,6 +133,9 @@ class DiaDeLosMuertosGame {
     // Inicializar sistema de audio
     this.audioManager = new AudioManager();
 
+    // Cargar progreso guardado
+    this.loadProgress();
+
     this.loadAssets().then(() => {
       this.setupResponsiveCanvas();
       this.initGame();
@@ -140,6 +143,48 @@ class DiaDeLosMuertosGame {
       this.setupSideSkulls();
       this.gameLoop();
     });
+  }
+
+  // Sistema de guardado de progreso
+  saveProgress() {
+    const gameData = {
+      currentLevel: this.currentLevel,
+      totalScore: this.totalScore,
+      timestamp: Date.now(),
+    };
+
+    try {
+      localStorage.setItem("diaDeLosMuertosProgress", JSON.stringify(gameData));
+      console.log("Progreso guardado:", gameData);
+    } catch (error) {
+      console.warn("Error al guardar progreso:", error);
+    }
+  }
+
+  loadProgress() {
+    try {
+      const savedData = localStorage.getItem("diaDeLosMuertosProgress");
+      if (savedData) {
+        const gameData = JSON.parse(savedData);
+        this.currentLevel = gameData.currentLevel || 1;
+        this.totalScore = gameData.totalScore || 0;
+        console.log("Progreso cargado:", gameData);
+      }
+    } catch (error) {
+      console.warn("Error al cargar progreso:", error);
+      // Usar valores por defecto si hay error
+      this.currentLevel = 1;
+      this.totalScore = 0;
+    }
+  }
+
+  clearProgress() {
+    try {
+      localStorage.removeItem("diaDeLosMuertosProgress");
+      console.log("Progreso eliminado");
+    } catch (error) {
+      console.warn("Error al eliminar progreso:", error);
+    }
   }
 
   setupResponsiveCanvas() {
@@ -335,11 +380,15 @@ class DiaDeLosMuertosGame {
     // Configurar nivel actual
     this.setupCurrentLevel();
 
+    // Generar tablero con semilla basada en el nivel para consistencia
+    const levelSeed = this.currentLevel * 12345; // Semilla única por nivel
+    let seedCounter = 0;
+
     for (let row = 0; row < this.gridSize; row++) {
       this.board[row] = [];
       for (let col = 0; col < this.gridSize; col++) {
         this.board[row][col] = {
-          type: this.getRandomSymbol(),
+          type: this.getRandomSymbol(levelSeed + seedCounter),
           x: col * this.tileSize,
           y: row * this.tileSize,
           targetX: col * this.tileSize,
@@ -348,20 +397,33 @@ class DiaDeLosMuertosGame {
           rotation: 0,
           alpha: 1,
         };
+        seedCounter++;
       }
     }
 
-    // Remove initial matches
-    this.removeInitialMatches();
+    // Remove initial matches (también con semilla para consistencia)
+    this.removeInitialMatches(levelSeed + 1000);
     this.updateDisplay();
   }
 
-  getRandomSymbol() {
+  // Generador de números pseudoaleatorios con semilla
+  seededRandom(seed) {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  getRandomSymbol(seed = null) {
+    if (seed !== null) {
+      // Usar semilla para generar símbolo consistente
+      return Math.floor(this.seededRandom(seed) * this.symbolNames.length);
+    }
     return Math.floor(Math.random() * this.symbolNames.length);
   }
 
-  removeInitialMatches() {
+  removeInitialMatches(seed = null) {
     let hasMatches = true;
+    let seedCounter = 0;
+
     while (hasMatches) {
       hasMatches = false;
 
@@ -372,7 +434,10 @@ class DiaDeLosMuertosGame {
             this.board[row][col].type === this.board[row][col + 1].type &&
             this.board[row][col].type === this.board[row][col + 2].type
           ) {
-            this.board[row][col].type = this.getRandomSymbol();
+            this.board[row][col].type =
+              seed !== null
+                ? this.getRandomSymbol(seed + seedCounter++)
+                : this.getRandomSymbol();
             hasMatches = true;
           }
         }
@@ -385,7 +450,10 @@ class DiaDeLosMuertosGame {
             this.board[row][col].type === this.board[row + 1][col].type &&
             this.board[row][col].type === this.board[row + 2][col].type
           ) {
-            this.board[row][col].type = this.getRandomSymbol();
+            this.board[row][col].type =
+              seed !== null
+                ? this.getRandomSymbol(seed + seedCounter++)
+                : this.getRandomSymbol();
             hasMatches = true;
           }
         }
@@ -1798,6 +1866,9 @@ class DiaDeLosMuertosGame {
     // Actualizar score total acumulado
     this.totalScore += levelScore;
 
+    // Guardar progreso inmediatamente
+    this.saveProgress();
+
     // Mostrar modal después de un breve delay
     setTimeout(() => {
       this.showLevelCompleteModal(levelScore, movesBonus);
@@ -1840,6 +1911,9 @@ class DiaDeLosMuertosGame {
     this.currentLevel++;
     this.levelCompleted = false;
 
+    // Guardar progreso antes de inicializar el nuevo nivel
+    this.saveProgress();
+
     // Inicializar el nuevo nivel (score se reinicia a 0 en initGame)
     this.initGame();
 
@@ -1864,6 +1938,9 @@ class DiaDeLosMuertosGame {
     this.totalScore = 0;
     this.levelCompleted = false;
     this.gameCompleted = false;
+
+    // Limpiar progreso guardado
+    this.clearProgress();
 
     // Cerrar modales
     document.getElementById("levelCompleteModal").style.display = "none";
