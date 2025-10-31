@@ -222,11 +222,13 @@ class DiaDeLosMuertosGame {
       );
     }
 
-    // Cargar item especial de cruz para líneas de 5+
+    // Cargar item especial de cruz para líneas de 4
     this.symbolImages["special_cross"] = await svgToCanvas(
       SVG_ASSETS.crossCandle,
       this.tileSize - 10
     );
+
+
 
     // Cargar item especial de gato para matches de exactamente 4
     this.symbolImages["special_cat"] = await svgToCanvas(
@@ -715,11 +717,11 @@ class DiaDeLosMuertosGame {
                 tiles: [],
               });
             }
-            // Detectar línea de 5+ para crear item especial de cruz
+            // Detectar línea de 5+ para crear item especial de fantasma 3x3
             else if (count >= 5) {
               const centerCol = startCol + Math.floor(count / 2);
               specialPatterns.push({
-                type: "line_5_horizontal",
+                type: "ghost_5_horizontal",
                 centerPosition: { row, col: centerCol },
                 tiles: [],
               });
@@ -747,11 +749,11 @@ class DiaDeLosMuertosGame {
             tiles: [],
           });
         }
-        // Detectar línea de 5+ para crear item especial de cruz
+        // Detectar línea de 5+ para crear item especial de fantasma 3x3
         else if (count >= 5) {
           const centerCol = startCol + Math.floor(count / 2);
           specialPatterns.push({
-            type: "line_5_horizontal",
+            type: "ghost_5_horizontal",
             centerPosition: { row, col: centerCol },
             tiles: [],
           });
@@ -785,11 +787,11 @@ class DiaDeLosMuertosGame {
                 tiles: [],
               });
             }
-            // Detectar línea de 5+ para crear item especial de cruz
+            // Detectar línea de 5+ para crear item especial de fantasma 3x3
             else if (count >= 5) {
               const centerRow = startRow + Math.floor(count / 2);
               specialPatterns.push({
-                type: "line_5_vertical",
+                type: "ghost_5_vertical",
                 centerPosition: { row: centerRow, col },
                 tiles: [],
               });
@@ -817,11 +819,11 @@ class DiaDeLosMuertosGame {
             tiles: [],
           });
         }
-        // Detectar línea de 5+ para crear item especial de cruz
+        // Detectar línea de 5+ para crear item especial de fantasma 3x3
         else if (count >= 5) {
           const centerRow = startRow + Math.floor(count / 2);
           specialPatterns.push({
-            type: "line_5_vertical",
+            type: "ghost_5_vertical",
             centerPosition: { row: centerRow, col },
             tiles: [],
           });
@@ -1309,32 +1311,11 @@ class DiaDeLosMuertosGame {
           }
         }, 250); // Crear después de que se eliminen los elementos
       } else if (
-        pattern.type === "line_5_horizontal" ||
-        pattern.type === "line_5_vertical"
+        pattern.type === "ghost_5_horizontal" ||
+        pattern.type === "ghost_5_vertical" ||
+        pattern.type === "L" ||
+        pattern.type === "T"
       ) {
-        // Crear item especial de cruz para líneas de 5+
-        this.board[row][col] = {
-          type: "special_cross",
-          x: col * this.tileSize,
-          y: row * this.tileSize,
-          targetX: col * this.tileSize,
-          targetY: row * this.tileSize,
-          scale: 0.5, // Empezar pequeño para animación
-          rotation: 0,
-          alpha: 1,
-          isSpecial: true,
-          specialType: "cross",
-          preserveSpecial: true,
-        };
-
-        // Animación especial de creación
-        this.animations.push({
-          type: "specialCreate",
-          tile: this.board[row][col],
-          progress: 0,
-          duration: 500,
-        });
-      } else if (pattern.type === "L" || pattern.type === "T") {
         // Crear item especial de fantasma para patrones L y T
         // Ya tenemos row y col de la lógica anterior
         this.board[row][col] = {
@@ -1745,6 +1726,7 @@ class DiaDeLosMuertosGame {
       }, 400);
     }, 200);
   }
+
 
   dropTiles() {
     for (let col = 0; col < this.gridSize; col++) {

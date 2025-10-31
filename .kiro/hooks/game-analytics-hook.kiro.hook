@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Game Analytics & Balance",
+  "description": "Analyzes user gameplay patterns, identifies difficult levels, suggests balance adjustments, and generates progression reports",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "game.js",
+      "audio.js",
+      "assets.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the game code changes and provide insights on: 1) User gameplay patterns that can be inferred from the code structure, 2) Potential difficulty spikes or balance issues in game mechanics, 3) Suggestions for gameplay balance adjustments, 4) Recommendations for tracking player progression metrics. Focus on game mechanics, scoring systems, level progression, and player interaction patterns."
+  }
+}
